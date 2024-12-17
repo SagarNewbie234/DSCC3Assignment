@@ -52,8 +52,21 @@ void MergeSortIterative(Array A) {
 
 
 int main(){
-    int arr[9] = {35, 50, 15, 25, 80, 20, 90, 45, 14};
-    Array A = {9, arr};
+    int size;
+    printf("Enter size : ");
+    scanf("%d", &size);
+
+    int arr[size];
+    printf("Enter Array : ");
+    for(int i = 0; i < size; i++){
+        scanf("%d", &arr[i]);
+    }
+
+    Array A = {size, arr};
+
+    printf("Original Array : ");
+    PrintArray(A);
     MergeSortIterative(A);
+    printf("\nSorted Array : ");
     PrintArray(A);
 }
