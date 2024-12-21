@@ -47,7 +47,7 @@ void ExpressionBalanceChecker(const char* string){
 int main(){
     char buffer[100];
     printf("**********Bracket Checker*********");
-    printf("Input a string containing Brackets and check if its balanced or not :\nEnter String : ");
+    printf("\nInput a string containing Brackets and check if its balanced or not :\nEnter String : ");
     scanf("%[^\n]s", buffer);
 
     ExpressionBalanceChecker(buffer);

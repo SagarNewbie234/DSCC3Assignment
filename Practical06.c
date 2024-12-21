@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#define MAX 5
+#define MAX 3
 
 typedef struct queue{
     int queue[MAX];
@@ -96,5 +96,4 @@ int main(){
                 printf("ERROR : Invalid Operation Selected!");
         }
     }
-
 }
