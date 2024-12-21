@@ -15,15 +15,7 @@ void PrintArray(int size, int* arr){
 
 // MAX_HEAP
 
-void UpHeapify(int size, int* arr){
-    for(int j = size - 1; j > 0; j = (j - 1) / 2){
-        if(arr[j] > arr[(j - 1) / 2]){
-            swap(arr + j, arr + (j - 1) / 2);
-        }
-    }
-}
-
-void DownHeapify(int size, int* arr){
+void SiftDown(int size, int* arr){
     int j = 0, maxindex;
     while(2*j + 1 < size){
         maxindex = 2*j + 1;
@@ -36,17 +28,17 @@ void DownHeapify(int size, int* arr){
     }
 }
 
-void CreateHeap(int size, int* arr){
-    for(int i = 1; i < size; i++){
-        UpHeapify(i + 1, arr);
+void Heapify(int size, int* arr){
+    for(int i = size - 1; i >= 0; i--){
+        SiftDown(size - 1 - i, arr + i);
     }
 }
 
 void HeapSort(int size, int* arr){
-    CreateHeap(size, arr);
+    Heapify(size, arr);
     for(int i = 0; i < size; i++){
         swap(arr, arr + size - 1 - i);
-        DownHeapify(size - 1 - i, arr);
+        SiftDown(size - 1 - i, arr);
     }
 }
 
