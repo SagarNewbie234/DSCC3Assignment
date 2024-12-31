@@ -9,18 +9,16 @@ typedef struct node {
 
 Node* CreateNode(int data){
     Node* newnode = (Node*) calloc(1, sizeof(Node));
-    if(newnode == NULL){
-        fprintf(stderr, "ERROR : Memory Allocation of Node Failed");
-        exit(1);
+    if(!newnode){
+        perror("Memory Allocation Error!");
+        exit(EXIT_FAILURE);
     }
     newnode->data = data;
     newnode->next = NULL;
     return newnode;
 }
 
-Node* CreateHeader(){
-    return CreateNode(INT_MAX);
-}
+Node* CreateHeader(){return CreateNode(INT_MAX);}
 
 void InsertAfter(Node* Header, int data, int pos){
     if(pos < 0){
@@ -28,12 +26,8 @@ void InsertAfter(Node* Header, int data, int pos){
     }else{
         Node* newnode = CreateNode(data);
         Node* curr = Header;
-        int i = 0;
-        while(curr != NULL && i < pos){
-            curr = curr->next;
-            i++;
-        }
-        if(curr == NULL){
+        for(int i = 0; curr != NULL && i < pos; i++) curr = curr->next;
+        if(!curr){
             fprintf(stderr, "ERROR : Given Position is Out of Index!\n");
             free(newnode);
         }else{
@@ -48,10 +42,8 @@ void DeleteAt(Node* Header, int pos){
         fprintf(stderr, "ERROR : Invalid Position Given for Delete Operation or List is Empty!\n");
     }else{
         Node* curr = Header;
-        int i = 1;
-        while(curr->next != NULL && i < pos){
+        for(int i = 1; curr->next != NULL && i < pos; i++){
             curr = curr->next;
-            i++;
         }
         if(curr->next == NULL){
             fprintf(stderr, "ERROR : Given Position is Out of Index or List is Empty!\n");
@@ -64,9 +56,8 @@ void DeleteAt(Node* Header, int pos){
     }
 }
 
-void FreeList(Node* Header){
-    Node* curr = Header->next;
-    while(curr != NULL){
+void FreeList(Node* Header) {
+    for (Node* curr = Header->next; curr != NULL; ) {
         Node* next = curr->next;
         free(curr);
         curr = next;
@@ -75,27 +66,21 @@ void FreeList(Node* Header){
 }
 
 int CountListNodes(Node* Header){
-    int i = 0;
-    Node* curr = Header->next;
-    while(curr != NULL){
-        curr = curr->next;
-        i++;
-    }
-    return i;
+    int count = 0;
+    for(Node* curr = Header->next; curr != NULL; curr = curr->next) count++;
+    return count;
 }
 
 
-void SeperateIntoOddEven(Node* Main, Node* Even, Node* Odd){
+void SeperateIntoOddEven(Node* Main, Node* Even, Node* Odd) {
     FreeList(Even);
     FreeList(Odd);
-    Node* curr = Main->next;
-    while(curr != NULL){
-        if(curr->data % 2 == 0){
+    for (Node* curr = Main->next; curr != NULL; curr = curr->next) {
+        if (curr->data % 2 == 0) {
             InsertAfter(Even, curr->data, CountListNodes(Even));
-        }else{
+        } else {
             InsertAfter(Odd, curr->data, CountListNodes(Odd));
         }
-        curr = curr->next;
     }
 }
 
